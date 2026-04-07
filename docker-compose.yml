@@ -1,6 +1,21 @@
 version: '3.8'
 
 services:
+  app:
+    build: .
+    container_name: ratelimiter-app
+    ports:
+      - "8080:8080"
+    environment:
+      - POSTGRES_URL=jdbc:postgresql://postgres:5432/ratelimiter
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+    depends_on:
+      - postgres
+      - redis
+
   postgres:
     image: postgres:15-alpine
     container_name: ratelimiter-db
