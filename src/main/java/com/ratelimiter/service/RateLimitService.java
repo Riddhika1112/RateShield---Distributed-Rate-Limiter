@@ -29,7 +29,8 @@ public class RateLimitService {
                         .orElse(null)
         ).flatMap(rule -> {
             if (rule == null) {
-                metricsService.recordRequest(clientIp, routePath, "ALLOWED", "NONE");
+                String maskedIp = clientIp.replaceAll("\\.\\d+\\.\\d+$", ".***.***");
+                metricsService.recordRequest(maskedIp, routePath, "ALLOWED", "NONE");
                 return Mono.just(true); // no rule = allow
             }
 
@@ -41,7 +42,8 @@ public class RateLimitService {
 
             return allowedMono.doOnNext(allowed -> {
                 String status = allowed ? "ALLOWED" : "BLOCKED";
-                metricsService.recordRequest(clientIp, routePath, status, rule.getAlgorithm().name());
+                String maskedIp = clientIp.replaceAll("\\.\\d+\\.\\d+$", ".***.***");
+                metricsService.recordRequest(maskedIp, routePath, status, rule.getAlgorithm().name());
             });
         });
     }
