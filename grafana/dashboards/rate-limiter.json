@@ -1,0 +1,63 @@
+{
+  "title": "Rate Limiter",
+  "uid": "rate-limiter-001",
+  "panels": [
+    {
+      "type": "timeseries",
+      "title": "Requests per minute",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
+      "targets": [
+        {
+          "expr": "rate(rate_limiter_requests_total[1m])",
+          "legendFormat": "{{route}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "barchart",
+      "title": "Blocked requests",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
+      "targets": [
+        {
+          "expr": "rate(rate_limiter_blocked_total[1m])",
+          "legendFormat": "{{route}}",
+          "refId": "A"
+        }
+      ]
+    },
+    {
+      "type": "stat",
+      "title": "Block rate % (Last 5 mins)",
+      "gridPos": { "h": 8, "w": 12, "x": 0, "y": 8 },
+      "targets": [
+        {
+          "expr": "sum(increase(rate_limiter_requests_total{status=\"BLOCKED\"}[5m])) / sum(increase(rate_limiter_requests_total[5m])) * 100",
+          "refId": "A"
+        }
+      ],
+      "fieldConfig": {
+        "defaults": {
+          "unit": "percent",
+          "decimals": 1
+        }
+      }
+    },
+    {
+      "type": "table",
+      "title": "Top Blocked IPs",
+      "gridPos": { "h": 8, "w": 12, "x": 12, "y": 8 },
+      "targets": [
+        {
+          "expr": "topk(10, sum by (clientIp) (rate_limiter_requests_total{status=\"BLOCKED\"}))",
+          "refId": "A",
+          "format": "table",
+          "instant": true
+        }
+      ]
+    }
+  ],
+  "schemaVersion": 36,
+  "timezone": "browser",
+  "refresh": "5s"
+}
