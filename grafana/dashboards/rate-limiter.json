@@ -8,8 +8,8 @@
       "gridPos": { "h": 8, "w": 12, "x": 0, "y": 0 },
       "targets": [
         {
-          "expr": "rate(rate_limiter_requests_total[1m])",
-          "legendFormat": "{{route}}",
+          "expr": "sum by (status) (rate(rate_limiter_requests_total[1m]))",
+          "legendFormat": "{{status}}",
           "refId": "A"
         }
       ]
@@ -20,8 +20,8 @@
       "gridPos": { "h": 8, "w": 12, "x": 12, "y": 0 },
       "targets": [
         {
-          "expr": "rate(rate_limiter_blocked_total[1m])",
-          "legendFormat": "{{route}}",
+          "expr": "sum by (algorithm) (rate(rate_limiter_blocked_total[1m]))",
+          "legendFormat": "Blocked by {{algorithm}}",
           "refId": "A"
         }
       ]
