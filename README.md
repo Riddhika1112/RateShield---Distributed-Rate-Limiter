@@ -41,8 +41,8 @@ docker compose up -d --build
 
 ### 2. Verify Deployment
 Once started, the system exposes three primary URLs:
-* **Interactive UI:** [http://localhost:8080/](http://localhost:8080/)
-* **Grafana Dashboard:** [http://localhost:3000/](http://localhost:3000/) *(Username/Password: admin / admin)*
+* **Interactive UI:** [http://3.21.102.144:8080/](http://3.21.102.144:8080/)
+* **Grafana Dashboard:** [http://localhost:3000/](http://3.21.102.144:3000/d/rate-limiter-001/rate-limiter?orgId=1&from=now-1h&to=now&timezone=browser&refresh=5s) *(Username/Password: admin / admin)*
 * **Prometheus Targets:** [http://localhost:9090/](http://localhost:9090/)
 
 ---
