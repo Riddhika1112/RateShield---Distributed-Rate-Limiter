@@ -4,6 +4,7 @@ services:
   app:
     build: .
     container_name: ratelimiter-app
+    restart: always
     ports:
       - "8080:8080"
     environment:
@@ -19,6 +20,7 @@ services:
   postgres:
     image: postgres:15-alpine
     container_name: ratelimiter-db
+    restart: always
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -31,12 +33,14 @@ services:
   redis:
     image: redis:7-alpine
     container_name: ratelimiter-redis
+    restart: always
     ports:
       - "6379:6379"
 
   prometheus:
     image: prom/prometheus:latest
     container_name: ratelimiter-prometheus
+    restart: always
     ports:
       - "9090:9090"
     volumes:
@@ -47,6 +51,7 @@ services:
   grafana:
     image: grafana/grafana:latest
     container_name: ratelimiter-grafana
+    restart: always
     ports:
       - "3000:3000"
     environment:
